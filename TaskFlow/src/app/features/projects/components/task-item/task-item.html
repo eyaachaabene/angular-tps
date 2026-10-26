@@ -1,0 +1,54 @@
+<li
+  appHighlight="#e0f2fe"
+  [appOverdue]="task().dueDate"
+  [done]="task().status === 'Terminé'"
+  class="rounded-r-md border-l-4 bg-slate-50 px-3 py-3"
+  [ngClass]="{
+    'border-l-slate-400': task().status === 'En attente',
+    'border-l-sky-500': task().status === 'En cours',
+    'border-l-emerald-500': task().status === 'Terminé'
+  }"
+>
+  <div class="flex flex-wrap items-start justify-between gap-2">
+    <div>
+      <h4 class="text-sm font-semibold text-slate-800">{{ task().title }}</h4>
+      @if (task().dueDate; as due) {
+        <p class="mt-1 text-xs text-slate-500">{{ due | date:'dd/MM/yyyy' }} · {{ due | deadline }}</p>
+      } @else {
+        <p class="mt-1 text-xs text-slate-500">Aucune échéance</p>
+      }
+      @if (task().description; as description) {
+        <p class="mt-1 text-xs text-slate-600" [appTooltip]="description">
+          {{ description | truncate:40 }}
+        </p>
+      }
+      @if (showAssignee()) {
+        <p class="mt-1 text-xs text-slate-500">{{ assigneeName() }}</p>
+      }
+    </div>
+    <div class="flex flex-wrap gap-1.5">
+      <span
+        class="rounded-full px-2 py-1 text-xs font-semibold"
+        [ngClass]="{
+          'bg-rose-100 text-rose-800': task().priority === 'Haute',
+          'bg-orange-100 text-orange-800': task().priority === 'Moyenne',
+          'bg-emerald-100 text-emerald-800': task().priority === 'Basse'
+        }"
+      >
+        @switch (task().priority) {
+          @case ('Haute') { ▲ Haute }
+          @case ('Moyenne') { ● Moyenne }
+          @default { ▼ Basse }
+        }
+      </span>
+      <span
+        class="rounded-full px-2 py-1 text-xs font-medium"
+        [ngClass]="{
+          'bg-slate-200 text-slate-700': task().status === 'En attente',
+          'bg-sky-100 text-sky-800': task().status === 'En cours',
+          'bg-emerald-100 text-emerald-800': task().status === 'Terminé'
+        }"
+      >{{ task().status }}</span>
+    </div>
+  </div>
+</li>
