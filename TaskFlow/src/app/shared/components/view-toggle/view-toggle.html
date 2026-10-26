@@ -1,0 +1,24 @@
+<nav class="mx-auto flex max-w-7xl gap-2 px-4 pt-6 sm:px-6 lg:px-8" aria-label="Mode d’affichage">
+  <button
+    class="rounded-md border px-4 py-2 text-sm font-semibold transition"
+    [class.border-indigo-600]="view() === 'tasks'"
+    [class.bg-indigo-600]="view() === 'tasks'"
+    [class.text-white]="view() === 'tasks'"
+    [class.border-slate-300]="view() !== 'tasks'"
+    [class.bg-white]="view() !== 'tasks'"
+    [class.text-slate-700]="view() !== 'tasks'"
+    type="button"
+    (click)="viewChange.emit('tasks')"
+  >Par tâche</button>
+  <button
+    class="rounded-md border px-4 py-2 text-sm font-semibold transition"
+    [class.border-indigo-600]="view() === 'users'"
+    [class.bg-indigo-600]="view() === 'users'"
+    [class.text-white]="view() === 'users'"
+    [class.border-slate-300]="view() !== 'users'"
+    [class.bg-white]="view() !== 'users'"
+    [class.text-slate-700]="view() !== 'users'"
+    type="button"
+    (click)="viewChange.emit('users')"
+  >Par user</button>
+</nav>

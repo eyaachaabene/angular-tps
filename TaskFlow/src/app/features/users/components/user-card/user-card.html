@@ -1,0 +1,40 @@
+<article class="flex h-full flex-col rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div class="min-w-0">
+      <h2 class="text-lg font-bold text-slate-900">{{ user().name }}</h2>
+      <p class="mt-1 text-sm text-slate-600">{{ user().email }}</p>
+      <p class="mt-2 text-sm font-medium text-slate-700">{{ user().role }}</p>
+    </div>
+    <span
+      class="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
+      [class.bg-emerald-100]="user().active"
+      [class.text-emerald-800]="user().active"
+      [class.bg-slate-100]="!user().active"
+      [class.text-slate-700]="!user().active"
+    >{{ user().active ? 'Actif' : 'Inactif' }}</span>
+  </div>
+
+  <dl class="mt-5 grid grid-cols-3 gap-2 text-center">
+    <div class="rounded-md bg-slate-50 px-2 py-3">
+      <dt class="text-xs text-slate-500">À faire</dt>
+      <dd class="mt-1 text-lg font-bold text-slate-800">{{ waitingCount() }}</dd>
+    </div>
+    <div class="rounded-md bg-slate-50 px-2 py-3">
+      <dt class="text-xs text-slate-500">En cours</dt>
+      <dd class="mt-1 text-lg font-bold text-slate-800">{{ inProgressCount() }}</dd>
+    </div>
+    <div class="rounded-md bg-slate-50 px-2 py-3">
+      <dt class="text-xs text-slate-500">Terminées</dt>
+      <dd class="mt-1 text-lg font-bold text-slate-800">{{ completedCount() }}</dd>
+    </div>
+  </dl>
+
+  <div class="mt-6 flex-1 space-y-4">
+    @for (group of groups(); track group.project.id) {
+      <app-user-project-group [projectName]="group.project.name" [tasks]="group.tasks" />
+    } @empty {
+      <!-- @empty provides the no-assigned-tasks state. -->
+      <app-empty-state message="Aucune tâche assignée" />
+    }
+  </div>
+</article>

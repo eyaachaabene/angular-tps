@@ -1,0 +1,31 @@
+<main class="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+  <header class="mb-8 border-b border-slate-200 pb-7 sm:mb-10">
+    <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-widest text-emerald-700">TaskFlow / Tableau de bord</p>
+        <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">Mes utilisateurs</h1>
+        <p class="mt-2 max-w-xl text-sm leading-6 text-slate-600">Consultez les membres de l’équipe et leurs tâches.</p>
+      </div>
+      <label class="w-full sm:max-w-sm">
+        <span class="mb-2 block text-sm font-semibold text-slate-700">Rechercher un utilisateur</span>
+        <input
+          class="w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20"
+          type="search"
+          placeholder="Rechercher un utilisateur..."
+          [(ngModel)]="searchTerm"
+        />
+      </label>
+    </div>
+    <p class="mt-6 text-sm text-slate-500">{{ filteredUsers().length }} utilisateur(s)</p>
+  </header>
+
+  @if (filteredUsers().length === 0) {
+    <app-empty-state message="Aucun utilisateur trouvé" />
+  } @else {
+    <section class="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3" aria-label="Liste des utilisateurs">
+      @for (user of filteredUsers(); track user.id) {
+        <app-user-card [user]="user" [projects]="projects()" />
+      }
+    </section>
+  }
+</main>

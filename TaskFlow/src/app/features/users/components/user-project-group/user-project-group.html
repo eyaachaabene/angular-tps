@@ -1,0 +1,6 @@
+<section class="rounded-lg border border-slate-200 p-4">
+  <h3 class="mb-3 text-sm font-bold text-slate-800">
+    {{ projectName() }} <span class="font-medium text-slate-500">({{ tasks().length }})</span>
+  </h3>
+  <app-task-list [tasks]="tasks()" [showAssignee]="false" />
+</section>

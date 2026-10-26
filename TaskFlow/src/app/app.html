@@ -1,0 +1,6 @@
+<app-view-toggle [view]="view()" (viewChange)="setView($event)" />
+@if (view() === 'tasks') {
+  <app-project-list />
+} @else {
+  <app-user-list />
+}
