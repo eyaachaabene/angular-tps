@@ -1,12 +1,15 @@
+import { NgClass, NgStyle, LowerCasePipe, TitleCasePipe } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
+import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
+import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import type { Project } from '../../../projects/models/project.model';
 import type { Task } from '../../../projects/models/task.model';
 import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
-import type { User } from '../../models/user.model';
+import type { User, UserRole } from '../../models/user.model';
 import { UserProjectGroup } from '../user-project-group/user-project-group';
 
 @Component({
-  imports: [EmptyState, UserProjectGroup],
+  imports: [EmptyState, HighlightDirective, InitialsPipe, LowerCasePipe, NgClass, NgStyle, TitleCasePipe, UserProjectGroup],
   standalone: true,
   selector: 'app-user-card',
   templateUrl: './user-card.html',
@@ -14,6 +17,13 @@ import { UserProjectGroup } from '../user-project-group/user-project-group';
 export class UserCard {
   user = input.required<User>();
   projects = input.required<Project[]>();
+
+  roleColors: Record<UserRole, string> = {
+    'Développeur': '#2563eb',
+    'Designer': '#9333ea',
+    'Chef de projet': '#059669',
+    'Testeur': '#d97706',
+  };
 
   // Computed values derive this user's task groups and status counters.
   groups = computed(() =>

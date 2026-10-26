@@ -1,9 +1,16 @@
 import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
+import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
+import { OverdueDirective } from '../../../../shared/directives/overdue.directive';
+import { TooltipDirective } from '../../../../shared/directives/tooltip.directive';
 import type { Task } from '../../models/task.model';
+import { DeadlinePipe } from '../../../../shared/pipes/deadline.pipe';
+import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
 import { UserService } from '../../../../core/services/user.service';
 import type { User } from '../../../users/models/user.model';
 
 @Component({
+  imports: [DatePipe, DeadlinePipe, HighlightDirective, NgClass, OverdueDirective, TooltipDirective, TruncatePipe],
   standalone: true,
   selector: 'app-task-list',
   templateUrl: './task-list.html',

@@ -1,16 +1,21 @@
-<article class="flex h-full flex-col rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
+<article appHighlight class="flex h-full flex-col rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
   <div class="flex flex-wrap items-start justify-between gap-3">
-    <div class="min-w-0">
-      <h2 class="text-lg font-bold text-slate-900">{{ user().name }}</h2>
-      <p class="mt-1 text-sm text-slate-600">{{ user().email }}</p>
-      <p class="mt-2 text-sm font-medium text-slate-700">{{ user().role }}</p>
+    <div class="flex min-w-0 items-center gap-3">
+      <span class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" [ngStyle]="{ backgroundColor: roleColors[user().role] }">
+        {{ user().name | initials }}
+      </span>
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">{{ user().name | titlecase }}</h2>
+        <p class="mt-1 text-sm text-slate-600">{{ user().email | lowercase }}</p>
+        <p class="mt-2 text-sm font-medium text-slate-700">{{ user().role }}</p>
+      </div>
     </div>
     <span
       class="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
-      [class.bg-emerald-100]="user().active"
-      [class.text-emerald-800]="user().active"
-      [class.bg-slate-100]="!user().active"
-      [class.text-slate-700]="!user().active"
+      [ngClass]="{
+        'bg-emerald-100 text-emerald-800': user().active,
+        'bg-slate-100 text-slate-700': !user().active
+      }"
     >{{ user().active ? 'Actif' : 'Inactif' }}</span>
   </div>
 
