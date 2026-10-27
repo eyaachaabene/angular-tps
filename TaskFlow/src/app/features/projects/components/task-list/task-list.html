@@ -6,7 +6,11 @@
       <app-task-item
         [task]="task"
         [showAssignee]="showAssignee()"
-        [assigneeName]="assigneeNameOf(task)" />
+        [assigneeName]="assigneeNameOf(task)"
+        [projectId]="projectId()"
+        [editable]="editable()"
+        (taskStatusChange)="taskStatusChange.emit($event)"
+        (taskDelete)="taskDelete.emit($event)" />
     }
   </ul>
 }

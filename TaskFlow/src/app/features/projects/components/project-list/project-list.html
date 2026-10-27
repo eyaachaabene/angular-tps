@@ -27,6 +27,8 @@
         <app-project-card
           [project]="project"
           (projectSelected)="onProjectSelected($event)"
+          (taskStatusChange)="onTaskStatusChange($event)"
+          (taskDelete)="onTaskDelete($event)"
         />
       }
     </section>

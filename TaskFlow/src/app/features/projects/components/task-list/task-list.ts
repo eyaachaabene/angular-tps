@@ -1,6 +1,6 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { TaskItem } from '../task-item/task-item';
-import type { Task } from '../../models/task.model';
+import type { Task, TaskDelete, TaskStatusChange } from '../../models/task.model';
 import { UserService } from '../../../../core/services/user.service';
 import type { User } from '../../../users/models/user.model';
 
@@ -13,6 +13,10 @@ import type { User } from '../../../users/models/user.model';
 export class TaskList implements OnInit {
   tasks = input.required<Task[]>();
   showAssignee = input(true);
+  projectId = input<number>();
+  editable = input(true);
+  taskStatusChange = output<TaskStatusChange>();
+  taskDelete = output<TaskDelete>();
 
   private readonly userService = inject(UserService);
 

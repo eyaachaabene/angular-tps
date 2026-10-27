@@ -11,7 +11,7 @@ import {
 import { Component, computed, input, output } from '@angular/core';
 import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
 import type { Project } from '../../models/project.model';
-import type { TaskPriority } from '../../models/task.model';
+import type { TaskDelete, TaskPriority, TaskStatusChange } from '../../models/task.model';
 import { TaskList } from '../task-list/task-list';
 
 @Component({
@@ -34,10 +34,13 @@ import { TaskList } from '../task-list/task-list';
 export class ProjectCard {
   project = input.required<Project>();
   projectSelected = output<Project>();
+  taskStatusChange = output<TaskStatusChange>();
+  taskDelete = output<TaskDelete>();
 
+  completedCount = computed(() => this.project().tasks.filter((task) => task.status === 'Terminé').length);
   completionRate = computed(() => {
-    const tasks = this.project().tasks;
-    return tasks.length > 0 ? tasks.filter((task) => task.status === 'Terminé').length / tasks.length : 0;
+    const taskCount = this.project().tasks.length;
+    return taskCount > 0 ? this.completedCount() / taskCount : 0;
   });
 
   averageCost = computed(() => this.project().budget / this.project().tasks.length);
