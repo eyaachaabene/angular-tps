@@ -1,13 +1,14 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import type { Project } from '../../models/project.model';
-import type { TaskDelete, TaskStatusChange } from '../../models/task.model';
+import type { TaskDelete, TaskFilter, TaskStatusChange } from '../../models/task.model';
 import { ProjectService } from '../../../../core/services/project.service';
 import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
 import { ProjectCard } from '../project-card/project-card';
 
 @Component({
-  imports: [EmptyState, FormsModule, ProjectCard],
+  imports: [EmptyState, FormsModule, NgClass, ProjectCard],
   standalone: true,
   selector: 'app-project-list',
   templateUrl: './project-list.html',
@@ -17,6 +18,8 @@ export class ProjectList implements OnInit {
 
   projects = signal<Project[]>([]);
   searchTerm = signal('');
+  taskFilter = signal<TaskFilter>('Toutes');
+  filters: TaskFilter[] = ['Toutes', 'En cours', 'Terminé'];
   filteredProjects = computed(() => {
     const search = this.searchTerm().trim().toLocaleLowerCase();
     return this.projects().filter((project) =>

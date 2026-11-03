@@ -15,6 +15,19 @@
           [(ngModel)]="searchTerm"
         />
       </label>
+      <div class="flex flex-wrap gap-2" aria-label="Filtrer les tâches">
+        @for (f of filters; track f) {
+          <button
+            type="button"
+            class="rounded-md border px-3 py-2 text-sm font-semibold transition"
+            [ngClass]="{
+              'border-emerald-700 bg-emerald-700 text-white': taskFilter() === f,
+              'border-slate-300 bg-white text-slate-700 hover:bg-slate-50': taskFilter() !== f
+            }"
+            (click)="taskFilter.set(f)"
+          >{{ f === 'Terminé' ? 'Terminées' : f }}</button>
+        }
+      </div>
     </div>
     <p class="mt-6 text-sm text-slate-500">{{ filteredProjects().length }} projet(s)</p>
   </header>
@@ -26,6 +39,7 @@
       @for (project of filteredProjects(); track project.id) {
         <app-project-card
           [project]="project"
+          [taskFilter]="taskFilter()"
           (projectSelected)="onProjectSelected($event)"
           (taskStatusChange)="onTaskStatusChange($event)"
           (taskDelete)="onTaskDelete($event)"

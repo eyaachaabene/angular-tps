@@ -48,7 +48,7 @@
   <div class="mt-6 flex-1">
     <h3 class="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500">Tâches</h3>
     <app-task-list
-      [tasks]="project().tasks | slice:0:3"
+      [tasks]="visibleTasks() | slice:0:3"
       [projectId]="project().id"
       (taskStatusChange)="taskStatusChange.emit($event)"
       (taskDelete)="taskDelete.emit($event)" />

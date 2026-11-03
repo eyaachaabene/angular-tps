@@ -1,6 +1,7 @@
 export type TaskPriority = 'Haute' | 'Moyenne' | 'Basse';
 export type Status = 'En attente' | 'En cours' | 'Terminé';
 export type TaskStatus = Status;
+export type TaskFilter = 'Toutes' | 'En cours' | 'Terminé';
 
 export interface TaskStatusChange {
   projectId: number;
